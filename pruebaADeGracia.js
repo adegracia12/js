@@ -3,26 +3,9 @@ const codigo = ["BTMNMB", "NBMTMN", "TTBTMT", "BMBBMM", "NNNNTB", "TNBNTM"];
 let dict = {};
 
 const isDeveloper = (input) => {
-  let arrayP = [];
+  let arrayP = formatearArray(input);
 
-  for (let index = 0; index < input.length; index++) {
-    if (validarLetra(input[index])) {
-      arrayP.push(Array.from(input[index].toUpperCase()));
-    }
-  }
-
-  if (arrayP.length === input.length) {
-    for (let index = 0; index < input.length; index++) {
-      if (buscarHorizontal(arrayP, index)) {
-        return true;
-      }
-      if (buscarVertical(arrayP, index)) {
-        return true;
-      }
-    }
-  }
-
-  return false;
+  return validarAcceso(arrayP, input.length);
 };
 
 const buscarHorizontal = (arr, i) => {
@@ -58,6 +41,17 @@ const buscarLetra = (letra) => {
   }
 };
 
+const formatearArray = (input) => {
+  let arrayP = [];
+  for (let i = 0; i < input.length; i++) {
+    if (validarLetra(input[i])) {
+      arrayP.push(Array.from(input[i].toUpperCase()));
+    }
+  }
+
+  return arrayP;
+};
+
 const validarLetra = (letra) => {
   let esValido = false;
   esValido = /^[a-zA-Z]+$/.test(letra); //Valida si es una letra
@@ -66,6 +60,21 @@ const validarLetra = (letra) => {
   }
 
   return esValido;
+};
+
+const validarAcceso = (arr, inputLength) => {
+  if (arr.length === inputLength) {
+    for (let index = 0; index < inputLength; index++) {
+      if (buscarHorizontal(arr, index)) {
+        return true;
+      }
+      if (buscarVertical(arr, index)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 };
 
 console.log(isDeveloper(codigo));
